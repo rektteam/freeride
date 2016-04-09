@@ -70,7 +70,7 @@ var Location = Backbone.Model.extend({
 			lat: response.stations.position.lat,
 			lng: response.stations.position.lng
 		};
-		this.waypoints = [];
+		this.attributes.waypoints = [];
 		this.trigger('show-waypoints');
 	},
 

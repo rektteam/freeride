@@ -50,6 +50,9 @@
 	.navbar li a,
 	.navbar-brand {
 		color: #fff;
+		&:hover {
+			color: lightgreen;
+		}
 	}
 	.navbar-fixed-top {
 		padding: 0;
