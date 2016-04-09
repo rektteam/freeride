@@ -1,22 +1,19 @@
 <?php
 header('Content-type: text/html; charset=utf-8');
 
-require 'DistanceCalculator.php';
-require 'ArrayValuePairGenerator.php';
-require 'JCDecauxApiClient.php';
+ini_set('display_errors', true);
+error_reporting(E_ALL);
 
-//var_dump($stations);
+require 'SplClassLoader.php';
 
-//foreach ($stations as $key => $station)
-//{
-//	if ($station['status'] !== 'OPEN' || empty($station['available_bikes']))
-//	{
-//		unset($stations[$key]);
-//	}
-//}
+$classLoader = new SplClassLoader();
+$classLoader->register();
 
-$apiClient = new JCDecauxApiClient();
-$stations  = $apiClient->getAllStations();
+$apiClient = new StationFinder();
+$stations  = $apiClient->all();
+
+var_dump($stations);
+exit;
 
 $stationIds    = array_keys($stations);
 $pairGenerator = new ArrayValuePairGenerator();
