@@ -3,13 +3,10 @@
 header('Content-Type: application/json; charset=utf-8');
 
 ini_set('display_errors', true);
-ini_set('max_execution_time', 99999);
-ini_set('memory_limit', '32000M');
 error_reporting(E_ALL);
 
-require 'SplClassLoader.php';
-
-$classLoader = new SplClassLoader();
+require __DIR__ . '/source/php/ClassAutoloader.php';
+$classLoader = new ClassAutoloader();
 $classLoader->register();
 
 if (
@@ -55,7 +52,6 @@ foreach ($stations as $stationId => $station)
 
 $edges = json_decode(file_get_contents('edges.json'), true);
 
-$i = 0;
 foreach ($edges as $stationPair => $distanceInTime)
 {
 	list($stationAId, $stationBId) = explode('-', $stationPair);
@@ -68,7 +64,6 @@ foreach ($edges as $stationPair => $distanceInTime)
 	$stationA = $graph[$stationAId];
 	$stationB = $graph[$stationBId];
 
-	$i++;
 	$graph[$stationAId][$stationBId] = (int)ceil($distanceInTime);
 }
 
@@ -79,11 +74,11 @@ $response = [
 
 try
 {
-	$g = new Dijkstra($graph);
+	$dijkstra = new Dijkstra($graph);
 
-	$results = $g->shortestPath($closestStationToDeparture['number'], $closestStationToDestination['number']);
+	$path = $dijkstra->getShortestPath($closestStationToDeparture['number'], $closestStationToDestination['number']);
 
-	foreach ($results as $stationId)
+	foreach ($path as $stationId)
 	{
 		$response['stations'][] = [
 			'lat' => $stations[$stationId]['position']['lat'],
@@ -93,6 +88,7 @@ try
 }
 catch (Exception $exception)
 {
+	// In this case the station list is empty.
 }
 
 echo json_encode($response);

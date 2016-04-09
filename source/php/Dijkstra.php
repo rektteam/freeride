@@ -8,7 +8,7 @@ class Dijkstra
 		$this->graph = $graph;
 	}
 
-	public function shortestPath($source, $target) {
+	public function getShortestPath($source, $target) {
 		// initialize Q, d and pi for all vertices
 		$d = array();  // array of best estimates of shortest path to each vertex
 		$pi = array(); // array of predecessors for each vertex

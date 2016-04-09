@@ -1,30 +1,24 @@
 <?php
-header('Content-type: text/html; charset=utf-8');
+
+$distanceInMinuteLimit = 25;
+$distancePerMinute     = 200;
 
 ini_set('display_errors', true);
-error_reporting(E_ALL);
 
-require 'SplClassLoader.php';
-
-$classLoader = new SplClassLoader();
+require __DIR__ . '/source/php/ClassAutoloader.php';
+$classLoader = new ClassAutoloader();
 $classLoader->register();
 
-$apiClient = new StationFinder();
-$stations  = $apiClient->all();
+$stationFinder = new StationFinder();
+$stations = $stationFinder->all();
 
 $stationIds    = array_keys($stations);
 $pairGenerator = new ArrayValuePairGenerator();
 $stationPairs  = $pairGenerator->getPairs($stationIds);
 
-
-
-var_dump($stationPairs);
-exit;
 $distanceCalculator = new DistanceCalculator();
 
 $distancesInTime = [];
-$distanceInMinuteLimit = 30;
-$distancePerMinute = 200;
 
 foreach ($stationPairs as $stationPair)
 {
@@ -46,27 +40,11 @@ foreach ($stationPairs as $stationPair)
 	}
 }
 
+$isSaved = file_put_contents('edges.json', json_encode($distancesInTime));
+
+if (!$isSaved)
+{
+	exit('Could not save the file!');
+}
+
 var_dump($distancesInTime);
-
-//$currentPositionLat = 49.6019593;
-//$currentPositionLon = 6.1132482;
-//
-//$destinationPositionLat = 49.6201;
-//$destinationPositionLon = 6.1388;
-//
-//$distance = $distanceCalculator->getDistance(
-//	$currentPositionLat,
-//	$currentPositionLon,
-//	$destinationPositionLat,
-//	$destinationPositionLon
-//);
-
-//foreach ($stations as $station)
-//{
-//	echo $station['name'] . PHP_EOL;
-//}
-
-//12000 m / 60 p
-//200 m / p
-
-//echo 'distance: ' . $distance . ' m - minute: ' . ($distance / 200) . ' m';
