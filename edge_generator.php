@@ -3,9 +3,11 @@
 $distanceInMinuteLimit = 30;
 $distancePerMinute     = 200;
 
-require 'DistanceCalculator.php';
-require 'ArrayValuePairGenerator.php';
-require 'JCDecauxApiClient.php';
+ini_set('display_errors', true);
+require 'SplClassLoader.php';
+
+$classLoader = new SplClassLoader();
+$classLoader->register();
 
 $apiClient = new JCDecauxApiClient();
 $stations  = $apiClient->getAllStations();

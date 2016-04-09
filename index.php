@@ -1,5 +1,6 @@
 <?php
 
+ini_set('display_errors', true);
 error_reporting(E_ALL);
 
 require 'SplClassLoader.php';
@@ -13,28 +14,41 @@ use ShortestPath\Graph\Algorithm\Dijkstra;
 
 $graph = new Graph();
 
-$station1 = new Vertex('Veloh_1');
-$station2 = new Vertex('Veloh_2');
-$station3 = new Vertex('Veloh_3');
-$station4 = new Vertex('Veloh_4');
+$apiClient = new JCDecauxApiClient();
+$stations  = $apiClient->getAllStations();
 
-$station1->connect($station2, 16);
-$station1->connect($station3, 28);
-$station2->connect($station4, 10);
-$station1->connect($station4, 29);
+$vertexes = [];
 
-$graph->add($station1);
-$graph->add($station2);
-$graph->add($station3);
-$graph->add($station4);
+foreach ($stations as $stationId => $station)
+{
+	$vertexes[$stationId] = new Vertex($stationId);
+}
+
+$edges = json_decode(file_get_contents('edges.json'), true);
+
+foreach ($edges as $stationPair => $distanceInTime)
+{
+	list($stationAId, $stationBId) = explode('-', $stationPair);
+
+	/** @var $stationA Vertex */
+	$stationA = $vertexes[$stationAId];
+	$stationB = $vertexes[$stationBId];
+
+	$stationA->connect($stationB, intval($distanceInTime));
+}
+
+foreach ($vertexes as $vertex)
+{
+	$graph->add($vertex);
+}
 
 $dijkstra = new Dijkstra($graph);
-$dijkstra->setStartingVertex($station1);
-$dijkstra->setEndingVertex($station4);
+$dijkstra->setStartingVertex($vertexes['62']);
+$dijkstra->setEndingVertex($vertexes['55']);
 
-// echo $dijkstra->getLiteralShortestPath() . PHP_EOL;
-// echo 'Distance: ' . $dijkstra->getDistance();
-
+echo $dijkstra->getLiteralShortestPath() . PHP_EOL;
+echo 'Distance: ' . $dijkstra->getDistance();
+exit;
 ?>
 
 <!doctype html>
