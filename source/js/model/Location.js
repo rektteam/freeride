@@ -26,7 +26,6 @@ var Location = Backbone.Model.extend({
 	},
 
 	getLatitude: function() {
-		console.info(this.attributes);
 		return this.attributes.coords.latitude;
 	},
 
