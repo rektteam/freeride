@@ -19,7 +19,7 @@ var LocationView = Backbone.View.extend({
 	loadingCls: 'loading',
 
 	events: {
-		//'click .get-closest' : 'onGetClosestVelohClick'
+		'click .get-closest' : 'onGetClosestVelohClick'
 	},
 
 	initialize: function () {
@@ -39,8 +39,6 @@ var LocationView = Backbone.View.extend({
 	 * @return void;
 	 */
 	showProgress: function() {
-		console.info('Showing progress');
-		console.info(this.$el);
 		this.$el.addClass(this.loadingCls);
 	},
 
@@ -117,8 +115,6 @@ var LocationView = Backbone.View.extend({
 		bounds.extend(end);
 		map.fitBounds(bounds);
 
-		console.info(this.model.get('waypoints'));
-
 		var request = {
 			origin: start,
 			destination: end,
@@ -142,12 +138,10 @@ var LocationView = Backbone.View.extend({
 		this.directionsService.route(routeParams, function (response, status) {
 			switch(status)  {
 				case google.maps.DirectionsStatus.OK:
-					console.info('Route ok');
 					self.directionsDisplay.setDirections(response);
 					self.directionsDisplay.setMap(self.map);
 					break;
 				case google.maps.DirectionsStatus.ZERO_RESULTS:
-					console.info('Zero result, skipping waypoints and redraw without it');
 					routeParams.waypoints = [];
 					$.proxy(self.planRoute(routeParams), self);
 					break;
@@ -207,7 +201,6 @@ var LocationView = Backbone.View.extend({
 	 */
 	cleanMap: function() {
 		for (var i = 0; i < this.markers.length; i++) {
-			console.info('removing marker');
 			this.markers[i].setMap(null);
 		}
 		this.me.setMap(null);

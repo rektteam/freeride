@@ -5,6 +5,8 @@ var Location = Backbone.Model.extend({
 
 	// Communication url of the model
 	url: 'routeplanner.php',
+	// Url for getting the closest bike
+	closestBikeServiceUrl: 'closeststation.php',
 
 	attributes: {
 		startingPoint: undefined,
@@ -31,6 +33,45 @@ var Location = Backbone.Model.extend({
 		else {
 			alert('Your browser does not support geolocation');
 		}
+	},
+
+	/**
+	 * Retrieves the closest veloh bike according to your position
+	 *
+	 * @method onGetClosestVelohClick
+	 *
+	 * @return void;
+	 */
+	getClosestVeloh: function() {
+		var self = this;
+		$.ajax({
+			type: 'get',
+			url: this.closestBikeServiceUrl,
+			data: {
+				currentPositionLat: this.attributes.startingPoint.lat,
+				currentPositionLng: this.attributes.startingPoint.lng
+			},
+			success: function(response) {
+				self.onGetClosestVelohSuccess(response);
+			}
+		})
+	},
+
+	/**
+	 * Called by a successful reponse to the closest veloh
+	 *
+	 * @method onGetClosestVelohSuccess
+	 * @param {Object} response     Ajax response
+	 *
+	 * @return void;
+	 */
+	onGetClosestVelohSuccess: function(response) {
+		this.attributes.endPoint = {
+			lat: response.stations.position.lat,
+			lng: response.stations.position.lng
+		};
+		this.waypoints = [];
+		this.trigger('show-waypoints');
 	},
 
 	/**
@@ -117,13 +158,11 @@ var Location = Backbone.Model.extend({
 
 		for (var i = 0; i < this.attributes.waypoints.length; i++) {
 			var waypoint = this.attributes.waypoints[i];
-			console.info(waypoint);
 			convertedWayPoints.push({
 				location: new google.maps.LatLng(waypoint.lat, waypoint.lng)
 			});
 		}
 		this.attributes.waypoints = convertedWayPoints;
-		console.info(convertedWayPoints);
 	}
 
 
