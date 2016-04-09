@@ -1,0 +1,35 @@
+.index {
+	.navbar li a,
+	.navbar-brand {
+		color: #fff;
+	}
+	img {
+		max-width: 200px;
+		margin: 0 auto 40px;
+		&:hover {
+			box-shadow: 0 0 44px;
+			border-radius: 100px;
+			cursor: pointer;
+		}
+	}
+	.intro-text a {
+		color: #fff;
+		font-family: Roboto;
+	}
+	button {
+		font-family: Roboto;
+	}
+	.location-result {
+		font-size: 19px !important;
+		line-height: 29px;
+		margin-top: 20px;
+	}
+	#google-maps {
+		width: 100%;
+		height: 500px;
+		.fa-spin {
+			font-size: 15em;
+			margin-top: 110px;
+		}
+	}
+}
