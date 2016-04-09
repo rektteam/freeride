@@ -29,10 +29,10 @@ else
 			[
 				'status' => 'OK',
 				'stations' => [
-					['name' => 'FOIRE', 'lat' => 49.63706, 'lon' => 6.17044],
-					['name' => 'MUGUETS', 'lat' => 49.6216, 'lon' => 6.1565],
-					['name' => 'GARE CENTRALE', 'lat' => 49.6002, 'lon' => 6.1336],
-					['name' => 'SCHAARFEN ECK', 'lat' => 49.58043, 'lon' => 6.11465],
+					['name' => 'FOIRE', 'lat' => 49.63706, 'lng' => 6.17044],
+					['name' => 'MUGUETS', 'lat' => 49.6216, 'lng' => 6.1565],
+					['name' => 'GARE CENTRALE', 'lat' => 49.6002, 'lng' => 6.1336],
+					['name' => 'SCHAARFEN ECK', 'lat' => 49.58043, 'lng' => 6.11465],
 				]
 			]
 		)
