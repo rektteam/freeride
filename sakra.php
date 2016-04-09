@@ -12,13 +12,14 @@ $classLoader->register();
 $apiClient = new StationFinder();
 $stations  = $apiClient->all();
 
-var_dump($stations);
-exit;
-
 $stationIds    = array_keys($stations);
 $pairGenerator = new ArrayValuePairGenerator();
 $stationPairs  = $pairGenerator->getPairs($stationIds);
 
+
+
+var_dump($stationPairs);
+exit;
 $distanceCalculator = new DistanceCalculator();
 
 $distancesInTime = [];

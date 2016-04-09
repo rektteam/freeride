@@ -12,10 +12,6 @@ require 'SplClassLoader.php';
 $classLoader = new SplClassLoader();
 $classLoader->register();
 
-use ShortestPath\Graph\Graph;
-use ShortestPath\Graph\Vertex;
-use ShortestPath\Graph\Algorithm\Dijkstra;
-
 if (
 	empty($_REQUEST['currentPositionLat'])
 	|| empty($_REQUEST['currentPositionLng'])
@@ -50,41 +46,35 @@ if (empty($stations[$closestStationToDeparture['number']]))
 	$stations[$closestStationToDeparture['number']] = $closestStationToDeparture;
 }
 
-$vertexes = [];
+$graph = [];
 
 foreach ($stations as $stationId => $station)
 {
-	$vertexes[$stationId] = new Vertex($stationId);
+	$graph[$stationId] = [];
 }
 
 $edges = json_decode(file_get_contents('edges.json'), true);
 
+$i = 0;
 foreach ($edges as $stationPair => $distanceInTime)
 {
 	list($stationAId, $stationBId) = explode('-', $stationPair);
 
-	if (!isset($vertexes[$stationAId]) || !isset($vertexes[$stationBId]))
+	if (!isset($graph[$stationAId]) || !isset($graph[$stationBId]))
 	{
 		continue;
 	}
 
 	/** @var $stationA Vertex */
-	$stationA = $vertexes[$stationAId];
-	$stationB = $vertexes[$stationBId];
+	$stationA = $graph[$stationAId];
+	$stationB = $graph[$stationBId];
 
-	$stationA->connect($stationB, (int)ceil($distanceInTime));
+	$i++;
+	$graph[$stationAId][$stationBId] = (int)ceil($distanceInTime);
 }
-
-$graph = new Graph();
-
-foreach ($vertexes as $vertex)
-{
-	$graph->add($vertex);
-}
-
-$dijkstra = new Dijkstra($graph);
-$dijkstra->setStartingVertex($vertexes[$closestStationToDeparture['number']]);
-$dijkstra->setEndingVertex($vertexes[$closestStationToDestination['number']]);
+//var_dump($graph);
+//echo $i;
+//exit;
 
 $response = [
 	'status' => 'OK',
@@ -93,8 +83,9 @@ $response = [
 
 try
 {
-	$dijkstra->solve();
-	$results = $dijkstra->getShortestPath();
+	$g = new Dijkstra2($graph);
+
+	$g->shortestPath($closestStationToDeparture['number'], $closestStationToDestination['number']);
 
 	/** @var $results Vertex[] */
 	foreach ($results as $result)

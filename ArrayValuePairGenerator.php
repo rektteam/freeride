@@ -4,13 +4,16 @@ class ArrayValuePairGenerator
 {
 	public function getPairs($input)
 	{
-		$output=array();
+		$output = [];
 
-		for ($i=0;$i<sizeof($input);$i++) {
-			$k=$input[$i];
-			for ($j=$i+1;$j<sizeof($input);$j++) {
-				$v=$input[$j];
-				$output[]=array($k=>$v);
+		foreach ($input as $element)
+		{
+			foreach ($input as $element2)
+			{
+				if ($element !== $element2)
+				{
+					$output[] = [$element => $element2];
+				}
 			}
 		}
 
