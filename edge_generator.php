@@ -9,8 +9,8 @@ require 'SplClassLoader.php';
 $classLoader = new SplClassLoader();
 $classLoader->register();
 
-$apiClient = new JCDecauxApiClient();
-$stations  = $apiClient->getAllStations();
+$stationFinder = new StationFinder();
+$stations = $stationFinder->all();
 
 $stationIds    = array_keys($stations);
 $pairGenerator = new ArrayValuePairGenerator();
