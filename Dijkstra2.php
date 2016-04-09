@@ -56,18 +56,13 @@ class Dijkstra2
 
 		// stack will be empty if there is no route back
 		if ($S->isEmpty()) {
-			echo "No route from $source to $target\n";
+			throw new Exception('No route');
 		}
 		else {
 			// add the source node and print the path in reverse (LIFO) order
 			$S->push($source);
-			echo "$dist:";
-			$sep = '';
-			foreach ($S as $v) {
-				echo $sep, $v;
-				$sep = '->';
-			}
-			echo "\n";
+
+			return $S;
 		}
 	}
 }
