@@ -53,7 +53,7 @@ var LocationView = Backbone.View.extend({
 
 		this.map = new google.maps.Map(this.googleMapsEl.get(0), {
 			center: this.model.getStartingPoint(),
-			scrollwheel: false,
+			scrollwheel: true,
 			draggable: true,
 			zoom: 15
 		});
