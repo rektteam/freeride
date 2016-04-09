@@ -1,6 +1,6 @@
 <?php
 
-class Dijkstra2
+class Dijkstra
 {
 	protected $graph;
 

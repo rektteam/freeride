@@ -65,16 +65,12 @@ foreach ($edges as $stationPair => $distanceInTime)
 		continue;
 	}
 
-	/** @var $stationA Vertex */
 	$stationA = $graph[$stationAId];
 	$stationB = $graph[$stationBId];
 
 	$i++;
 	$graph[$stationAId][$stationBId] = (int)ceil($distanceInTime);
 }
-//var_dump($graph);
-//echo $i;
-//exit;
 
 $response = [
 	'status' => 'OK',
@@ -83,7 +79,7 @@ $response = [
 
 try
 {
-	$g = new Dijkstra2($graph);
+	$g = new Dijkstra($graph);
 
 	$results = $g->shortestPath($closestStationToDeparture['number'], $closestStationToDestination['number']);
 
