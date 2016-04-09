@@ -32,8 +32,8 @@ $dijkstra = new Dijkstra($graph);
 $dijkstra->setStartingVertex($station1);
 $dijkstra->setEndingVertex($station4);
 
-echo $dijkstra->getLiteralShortestPath() . PHP_EOL;
-echo 'Distance: ' . $dijkstra->getDistance();
+// echo $dijkstra->getLiteralShortestPath() . PHP_EOL;
+// echo 'Distance: ' . $dijkstra->getDistance();
 
 ?>
 
