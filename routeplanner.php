@@ -81,10 +81,8 @@ foreach ($vertexes as $vertex)
 }
 
 $dijkstra = new Dijkstra($graph);
-$dijkstra->setStartingVertex($vertexes[50]);
-//$dijkstra->setStartingVertex($vertexes[$closestStationToDeparture['number']]);
-//$dijkstra->setEndingVertex($vertexes[$closestStationToDestination['number']]);
-$dijkstra->setEndingVertex($vertexes[40]);
+$dijkstra->setStartingVertex($vertexes[$closestStationToDeparture['number']]);
+$dijkstra->setEndingVertex($vertexes[$closestStationToDestination['number']]);
 
 $response = [
 	'status' => 'OK',
