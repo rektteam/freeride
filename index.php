@@ -20,7 +20,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#page-top">Team Rekt</a>
+				<a class="navbar-brand" href="#page-top">Freeride</a>
 			</div>
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -29,7 +29,7 @@
 						<a href="#page-top"></a>
 					</li>
 					<li class="page-scroll">
-						<a href="#">Portfolio</a>
+						<a class="get-closest" href="#">Closest Bike</a>
 					</li>
 					<li class="page-scroll">
 						<a href="#">About</a>

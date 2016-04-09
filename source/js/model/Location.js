@@ -9,7 +9,8 @@ var Location = Backbone.Model.extend({
 	attributes: {
 		startingPoint: undefined,
 		endPoint: undefined,
-		waypoints: []
+		waypoints: [],
+		justClosest: false
 	},
 
 	initialize: function() {
@@ -75,24 +76,39 @@ var Location = Backbone.Model.extend({
 	},
 
 	/**
+	 * Calls getwaypoints() but with param that forces to
+	 * finds just the closest bike
+	 *
+	 * @method
+	 *
+	 * @return void;
+	 */
+	getClosestVeloh: function() {
+		this.getWayPoints();
+	},
+
+	/**
 	 * Sends an ajax call to the backend to get
 	 * back the waypoints
 	 *
 	 * @method getWayPoints
+	 * @param {Boolean} justClosest     True if we need the first veloh bike
 	 *
 	 * @return void;
 	 */
-	getWayPoints: function() {
+	getWayPoints: function(justClosest) {
 		var self = this;
+		var data = {
+			currentPositionLat: this.attributes.startingPoint.lat,
+			currentPositionLng: this.attributes.startingPoint.lng,
+			destinationPositionLat: justClosest ? this.attributes.startingPoint.lat : this.attributes.endPoint.lat,
+			destinationPositionLng: justClosest ? this.attributes.startingPoint.lng : this.attributes.endPoint.lng
+		};
+
 		$.ajax({
 			type: 'post',
 			url: this.url,
-			data: {
-				currentPositionLat: this.attributes.startingPoint.lat,
-				currentPositionLon: this.attributes.startingPoint.lng,
-				destinationPositionLat: this.attributes.endPoint.lat,
-				destinationPositionLon: this.attributes.endPoint.lng
-			},
+			data: data,
 			success: function(response) {
 				self.attributes.waypoints = response.stations;
 				self.convertWayPoints();
@@ -120,6 +136,7 @@ var Location = Backbone.Model.extend({
 			});
 		}
 		this.attributes.waypoints = convertedWayPoints;
+		console.info(convertedWayPoints);
 	}
 
 

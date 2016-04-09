@@ -13,12 +13,30 @@ var LocationView = Backbone.View.extend({
 	waypoints: [],
 	// Vehicle type
 	vehicleType: 'BICYCLING',
+	// Get closest veloh anchor selector
+	getClosestVelohSel: '.get-closest',
+
+	events: {
+		'click .get-closest' : 'onGetClosestVelohClick'
+	},
 
 	initialize: function () {
 		this.googleMapsEl = $(this.googleMapsId);
 
 		this.model.on('init-google-maps', $.proxy(this.initGoogleMaps, this), this);
 		this.model.on('show-waypoints', $.proxy(this.showWayPoints, this), this);
+	},
+
+	/**
+	 * Finds the nearest veloh bike around you
+	 *
+	 * @method onGetClosestVelohClick
+	 *
+	 * @return void;
+	 */
+	onGetClosestVelohClick: function() {
+		this.model.set('justClosest', true);
+		this.model.getClosestVeloh();
 	},
 
 	/**
@@ -30,7 +48,7 @@ var LocationView = Backbone.View.extend({
 	 * @return {void};
 	 */
 	initGoogleMaps: function() {
-		this.directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers: true});
+		this.directionsDisplay = new google.maps.DirectionsRenderer();
 		this.directionsService = new google.maps.DirectionsService;
 
 		this.map = new google.maps.Map(this.googleMapsEl.get(0), {
@@ -69,6 +87,8 @@ var LocationView = Backbone.View.extend({
 		bounds.extend(start);
 		bounds.extend(end);
 		map.fitBounds(bounds);
+
+		console.info(this.model.get('waypoints'));
 
 		var request = {
 			origin: start,

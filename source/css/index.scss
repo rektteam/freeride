@@ -3,6 +3,9 @@
 	.navbar-brand {
 		color: #fff;
 	}
+	.navbar-fixed-top {
+		padding: 0;
+	}
 	img {
 		max-width: 200px;
 		margin: 0 auto 40px;
@@ -29,6 +32,7 @@
 		height: 100%;
 		position: absolute !important;
 		top: 0;
+		left: 0;
 		.fa-spin {
 			font-size: 15em;
 			margin-top: 110px;
