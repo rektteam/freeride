@@ -1,3 +1,42 @@
+<?php
+
+error_reporting(E_ALL);
+
+require 'SplClassLoader.php';
+
+$classLoader = new SplClassLoader();
+$classLoader->register();
+
+use ShortestPath\Graph\Graph;
+use ShortestPath\Graph\Vertex;
+use ShortestPath\Graph\Algorithm\Dijkstra;
+
+$graph = new Graph();
+
+$station1 = new Vertex('Veloh_1');
+$station2 = new Vertex('Veloh_2');
+$station3 = new Vertex('Veloh_3');
+$station4 = new Vertex('Veloh_4');
+
+$station1->connect($station2, 16);
+$station1->connect($station3, 28);
+$station2->connect($station4, 10);
+$station1->connect($station4, 29);
+
+$graph->add($station1);
+$graph->add($station2);
+$graph->add($station3);
+$graph->add($station4);
+
+$dijkstra = new Dijkstra($graph);
+$dijkstra->setStartingVertex($station1);
+$dijkstra->setEndingVertex($station4);
+
+echo $dijkstra->getLiteralShortestPath() . PHP_EOL;
+echo 'Distance: ' . $dijkstra->getDistance();
+
+?>
+
 <!doctype html>
 <html lang="en">
 	<head>
