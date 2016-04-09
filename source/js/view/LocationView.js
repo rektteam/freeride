@@ -12,7 +12,7 @@ var LocationView = Backbone.View.extend({
 	// Waypoints between start and end direction
 	waypoints: [],
 	// Vehicle type
-	vehicleType: 'BICYCLING',
+	vehicleType: 'WALKING',
 	// Get closest veloh anchor selector
 	getClosestVelohSel: '.get-closest',
 	// Loading class

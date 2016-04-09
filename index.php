@@ -32,12 +32,6 @@
 					<li class="page-scroll">
 						<a class="get-closest" href="#">Closest Bike</a>
 					</li>
-					<li class="page-scroll">
-						<a href="#">About</a>
-					</li>
-					<li class="page-scroll">
-						<a href="#">Contact</a>
-					</li>
 				</ul>
 			</div>
 		</div>

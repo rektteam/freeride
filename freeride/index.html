@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Game of Code - Freeride</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/lightbox.css">
+		<link rel="stylesheet" href="css/theme/black.css" id="theme">
+
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<div class="slides">
+				<section>
+					<h1>Game of Code  Freeride</h1>
+				</section>
+
+				<section>
+					<h2>What is A/B testing?</h2>
+					<p>
+						​A/B Testing is about to compare two versions of content which are mostly identical except from one difference that might affect user's behaviour.​
+					</p>
+				</section>
+
+				<section>
+					<h2>Why is it useful?</h2>
+					<ul>
+						<li class="fragment">Visitors keep a website alive</li>
+						<li class="fragment">Every change has an impact on them</li>
+						<li class="fragment">You can find the best way to keep the users</li>
+						<li class="fragment">You can find out how to reach what you want them to do</li>
+					</ul>
+				</section>
+
+				<section>
+					<section>
+						<h2>About the book</h2>
+						<ul>
+							<li class="fragment">
+								Authors were product managers at Google, left because of the Barack Obama campaign
+							</li>
+							<li class="fragment">
+								Online donations to the campaign came from subscribers to the email newsletters.
+								They had 1 website to get as more as they can
+							</li>
+						</ul>
+					</section>
+				</section>
+
+				<section>
+					<h2>Obama Campaign website in 2008</h2>
+					<a href="https://web.archive.org/web/20080215011521/http://www.barackobama.com/" target="_blank">
+						<img src="image/obama_campaign_orig.jpg" alt="Barack Obama Campaign"/>
+					</a>
+				</section>
+
+				<section>
+					<h2>Button variations</h2>
+					<img style="width: 400px" src="image/button_variations.jpg" alt="Button variations"/>
+				</section>
+
+				<section>
+					<h2>Button variation results</h2>
+					<img src="image/button_variation_results.jpeg" alt="button variation results"/>
+				</section>
+
+				<section>
+					<h2>Media variations</h2>
+					<ol style="list-style-type: lower-alpha;">
+						<li>
+							<a href="image/obama_campaign_orig.jpg" data-lightbox="example-2">
+								Get Involved Image
+							</a>
+						</li>
+						<li>
+							<a href="image/family.jpg" data-lightbox="example-1">
+								Family Image
+							</a>
+						</li>
+						<li>
+							<a href="image/change.jpg" data-lightbox="example-1">
+								Change Image
+							</a>
+						</li>
+						<li>
+							<a href="video/barack.mp4" target="_blank">Barack's Video</a>
+						</li>
+						<li>
+							<a href="video/springfield.mp4" target="_blank">Springfield Video</a>
+						</li>
+						<li>
+							<a href="video/sam.mp4" target="_blank">Sam's Video</a>
+						</li>
+					</ol>
+				</section>
+
+				<section>
+					<h2>Media variation results</h2>
+					<img src="image/media_variation_results.jpeg" title="media variation results"/>
+				</section>
+
+				<section>
+					<h2>Combination Results (Button+Media)</h2>
+					<img src="image/Obama_test_combinations.jpeg" title="combination variation results"/>
+				</section>
+
+				<section id="transitions">
+					<h2>Result of the experiments</h2>
+					<img src="image/obama_progress.jpg" alt="experiment results"/>
+				</section>
+
+				<section>
+					<h2>Subtraction adds value</h2>
+					<p>
+						<a href="image/less_is_more.jpg" data-lightbox="example-1">
+							Obama 2012 campaign site
+						</a>
+					</p>
+				</section>
+
+				<section>
+					<h2>
+						Conversions under the hood
+					</h2>
+					<ul style="list-style: none;">
+						<li class="fragment">
+							There are 2 types of conversions
+						</li>
+						<li class="fragment">
+							1. Micro conversions
+						</li>
+						<li class="fragment">
+							2. Macro conversions
+						</li>
+					</ul>
+				</section>
+
+				<section id="themes">
+					<h2>Steps of A/B Testing</h2>
+					<ul style="list-style: none;">
+						<li>
+							1. Analyze Data
+						</li>
+						<li>
+							2. Form a hypotesis
+						</li>
+						<li>
+							3. Construct an experiment
+						</li>
+						<li>
+							4. Interpret results
+						</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>1. Analyze Data</h2>
+					<ul>
+						<li class="fragment">
+							2 important things: Quantitative & Qualitative data
+						</li>
+					</ul>
+				</section>
+
+				<section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+					<h2>2. Form a hypotesis</h2>
+					<ul>
+						<li>
+							"If [variable], then [Result], because [Rationale]."
+						</li>
+						<li class="fragment" style="color: #FF8C8C;">
+							If the call-to-action is shorter, the conversion rate will increase
+						</li>
+						<li class="fragment" style="color: lightgreen;">
+							If the call-to-action text is changed to "Complete My Order", the conversion
+							rates in the checkout will increase, because the cop is more specific and
+							personalized
+						</li>
+					</ul>
+				</section>
+
+				<section data-transition="slide" data-background="#b5533c" data-background-transition="zoom">
+					<h2>3. How to Construct an experiment</h2>
+					<ul style="list-style: none; display: block; ">
+						<li class="fragment">
+							Every test has 3 parts
+						</li>
+					</ul>
+					<ol style="list-style:decimal; display: block; ">
+						<li class="fragment">
+							Content
+						</li>
+						<li class="fragment">
+							Design
+						</li>
+						<li class="fragment">
+							Tech
+						</li>
+					</ol>
+				</section>
+
+				<section>
+					<h2>4. Evaluate Results</h2>
+					<ul>
+						<li>
+							How confident am I that the observed difference from
+							my experiment was not due to chance?
+						</li>
+						<li class="fragment">
+							95% Statistical Significance = 5% probability that
+							the observed difference was due to chance
+						</li>
+						<li class="fragment">
+							High statistical confidence = Lower risk of implementing a test that won by chance
+						</li>
+						<li class="fragment">
+							<a href="http://optimize.ly/StatCalculator" target="_blank">Optimizely Statcalculator</a>
+						</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>4. Evaluate results - cases</h2>
+					<ul>
+						<li class="fragment">
+							<strong style="color: cornflowerblue;">
+								Variation wins:
+							</strong>
+							Launch the variation or update your website
+						</li>
+						<li class="fragment">
+							<strong style="color: cornflowerblue;">
+								Original wins:
+							</strong>
+							Lean why hypotesis was incorrect
+						</li>
+						<li class="fragment">
+							<strong style="color: cornflowerblue;">
+								In either case:
+							</strong>
+							Think about what to test next
+						</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>
+						Some Tips to have successful tests
+					</h2>
+					<ul>
+						<li class="fragment">
+							Use empathy
+						</li>
+						<li class="fragment">
+							Check the results for different type of visitors
+						</li>
+						<li class="fragment">
+							<a href="http://www.usertesting.com/" target="_blank">Get real user feedback: http://www.usertesting.com/</a>
+						</li>
+					</ul>
+				</section>
+
+				<section class="companies">
+					<h2>
+						Who else uses AB Testing?
+					</h2>
+					<ul style="list-style: none;">
+						<li>
+							<img src="image/abtestingcompeniesandobama.jpg"/>
+						</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>
+						The End
+					</h2>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/lightbox.min.js"></script>
+
+		<script>
+
+			lightbox.option({
+				'resizeDuration': 200,
+				'wrapAround': true
+			});
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
