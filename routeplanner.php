@@ -15,32 +15,38 @@ use ShortestPath\Graph\Vertex;
 use ShortestPath\Graph\Algorithm\Dijkstra;
 
 if (
-	empty($_POST['currentPositionLat'])
-	|| empty($_POST['currentPositionLon'])
-	|| empty($_POST['destinationPositionLat'])
-	|| empty($_POST['destinationPositionLon'])
+	empty($_REQUEST['currentPositionLat'])
+	|| empty($_REQUEST['currentPositionLon'])
+	|| empty($_REQUEST['destinationPositionLat'])
+	|| empty($_REQUEST['destinationPositionLon'])
 ) {
 	exit(json_encode(['status' => 'ERROR', 'error_code' => 'MISSING_PARAMETER']));
 }
-else
-{
-	exit(
-		json_encode(
-			[
-				'status' => 'OK',
-				'stations' => [
-					['name' => 'FOIRE', 'lat' => 49.63706, 'lon' => 6.17044],
-					['name' => 'MUGUETS', 'lat' => 49.6216, 'lon' => 6.1565],
-					['name' => 'GARE CENTRALE', 'lat' => 49.6002, 'lon' => 6.1336],
-					['name' => 'SCHAARFEN ECK', 'lat' => 49.58043, 'lon' => 6.11465],
-				]
-			]
-		)
-	);
-}
 
 $stationFinder = new StationFinder();
-$stations = $stationFinder->whereThereAreFreeBikes();
+
+$closestStationToDeparture = $stationFinder->closest(
+	$stationFinder->whereThereAreAvailableBikes(),
+	$_REQUEST['currentPositionLat'],
+	$_REQUEST['currentPositionLon']
+);
+
+$stationsWhereThereAreAvailableBikeStands = $stationFinder->whereThereAreAvailableBikeStands();
+
+$closestStationToDestination = $stationFinder->closest(
+	$stationsWhereThereAreAvailableBikeStands,
+	$_REQUEST['destinationPositionLat'],
+	$_REQUEST['destinationPositionLon']
+);
+
+$stations = $stationsWhereThereAreAvailableBikeStands;
+
+// If the departure station has no available bike stands, we have to add it to the station list manually,
+// because we need to generate the edges for this station too.
+if (empty($stations[$closestStationToDeparture['number']]))
+{
+	$stations[$closestStationToDeparture['number']] = $closestStationToDeparture;
+}
 
 $vertexes = [];
 
@@ -49,13 +55,25 @@ foreach ($stations as $stationId => $station)
 	$vertexes[$stationId] = new Vertex($stationId);
 }
 
+$keys = array_flip(array_keys($vertexes));
+
+foreach ($keys as $key => $value)
+{
+	$keys[$key] = 0;
+}
+
+//var_dump($closestStationToDeparture);
+//var_dump($closestStationToDestination);
+
 $edges = json_decode(file_get_contents('edges.json'), true);
+
+
 
 foreach ($edges as $stationPair => $distanceInTime)
 {
 	list($stationAId, $stationBId) = explode('-', $stationPair);
 
-	if (!isset($vertexes[$stationAId], $vertexes[$stationBId]))
+	if (!isset($vertexes[$stationAId]) || !isset($vertexes[$stationBId]))
 	{
 		continue;
 	}
@@ -64,7 +82,10 @@ foreach ($edges as $stationPair => $distanceInTime)
 	$stationA = $vertexes[$stationAId];
 	$stationB = $vertexes[$stationBId];
 
-	$stationA->connect($stationB, intval($distanceInTime));
+	$stationA->connect($stationB, (int)ceil($distanceInTime));
+
+	$keys[$stationAId] += 1;
+	$keys[$stationBId] += 1;
 }
 
 $graph = new Graph();
@@ -75,8 +96,8 @@ foreach ($vertexes as $vertex)
 }
 
 $dijkstra = new Dijkstra($graph);
-$dijkstra->setStartingVertex($vertexes['62']);
-$dijkstra->setEndingVertex($vertexes['55']);
+$dijkstra->setStartingVertex($vertexes[$closestStationToDeparture['number']]);
+$dijkstra->setEndingVertex($vertexes[$closestStationToDestination['number']]);
 
 echo $dijkstra->getLiteralShortestPath() . PHP_EOL;
 echo 'Distance: ' . $dijkstra->getDistance();
