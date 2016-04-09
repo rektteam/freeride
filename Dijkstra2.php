@@ -23,8 +23,6 @@ class Dijkstra2
 			}
 		}
 
-		var_dump($source, )
-
 		// initial distance at source is 0
 		$d[$source] = 0;
 
