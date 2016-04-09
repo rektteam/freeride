@@ -193,6 +193,7 @@ var LocationView = Backbone.View.extend({
 	 */
 	showWayPoints: function() {
 		this.calcRoute();
+		this.cleanMap();
 	}
 
 });
