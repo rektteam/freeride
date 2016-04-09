@@ -17,7 +17,7 @@ var LocationView = Backbone.View.extend({
 	getClosestVelohSel: '.get-closest',
 
 	events: {
-		'click .get-closest' : 'onGetClosestVelohClick'
+		//'click .get-closest' : 'onGetClosestVelohClick'
 	},
 
 	initialize: function () {

@@ -76,33 +76,20 @@ var Location = Backbone.Model.extend({
 	},
 
 	/**
-	 * Calls getwaypoints() but with param that forces to
-	 * finds just the closest bike
-	 *
-	 * @method
-	 *
-	 * @return void;
-	 */
-	getClosestVeloh: function() {
-		this.getWayPoints();
-	},
-
-	/**
 	 * Sends an ajax call to the backend to get
 	 * back the waypoints
 	 *
 	 * @method getWayPoints
-	 * @param {Boolean} justClosest     True if we need the first veloh bike
 	 *
 	 * @return void;
 	 */
-	getWayPoints: function(justClosest) {
+	getWayPoints: function() {
 		var self = this;
 		var data = {
 			currentPositionLat: this.attributes.startingPoint.lat,
 			currentPositionLng: this.attributes.startingPoint.lng,
-			destinationPositionLat: justClosest ? this.attributes.startingPoint.lat : this.attributes.endPoint.lat,
-			destinationPositionLng: justClosest ? this.attributes.startingPoint.lng : this.attributes.endPoint.lng
+			destinationPositionLat: this.attributes.endPoint.lat,
+			destinationPositionLng: this.attributes.endPoint.lng
 		};
 
 		$.ajax({
