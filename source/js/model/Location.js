@@ -91,7 +91,7 @@ var Location = Backbone.Model.extend({
 			destinationPositionLat: this.attributes.endPoint.lat,
 			destinationPositionLng: this.attributes.endPoint.lng
 		};
-
+		this.trigger('show-progress');
 		$.ajax({
 			type: 'post',
 			url: this.url,

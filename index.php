@@ -13,6 +13,7 @@
 	<body id="page-top" class="index">
 		<nav class="navbar navbar-default navbar-fixed-top">
 		<div class="container">
+            <div class="loader"><i class="fa fa-cog fa-spin"></i></div>
 			<div class="navbar-header page-scroll">
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 					<span class="sr-only">Toggle navigation</span>
