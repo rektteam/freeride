@@ -1,6 +1,6 @@
 <?php
 
-$distanceInMinuteLimit = 10;
+$distanceInMinuteLimit = 25;
 $distancePerMinute     = 200;
 
 ini_set('display_errors', true);
