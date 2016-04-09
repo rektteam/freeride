@@ -20,7 +20,7 @@ class StationFinder
 		return $stations;
 	}
 
-	public function whereThereAreFreeBikes()
+	public function whereThereAreAvailableBikes()
 	{
 		$stations = $this->all();
 
@@ -35,20 +35,42 @@ class StationFinder
 		return $stations;
 	}
 
-	public function closestWhereThereAreFreeBikes($latitude, $longitude)
+	public function whereThereAreAvailableBikeStands()
+	{
+		$stations = $this->all();
+
+		foreach ($stations as $key => $station)
+		{
+			if ($station['status'] !== 'OPEN' || empty($station['available_bike_stands']))
+			{
+				unset($stations[$key]);
+			}
+		}
+
+		return $stations;
+	}
+
+	public function closest(array $stations, $latitude, $longitude)
 	{
 		$distanceCalculator = new DistanceCalculator();
 
-		$stations = $this->whereThereAreFreeBikes();
-
-		$closest = null;
+		$closestDistance = null;
+		$closestStation  = null;
 
 		foreach ($stations as $station)
 		{
 			$distance = $distanceCalculator->getDistance($latitude, $longitude, $station['position']['lat'], $station['position']['lng']);
 
-
+			if ($closestDistance === null || $closestDistance > $distance)
+			{
+				$closestDistance = $distance;
+				$closestStation  = $station;
+			}
 		}
+
+		$closestStation['distance'] = $closestDistance;
+
+		return $closestStation;
 	}
 
 	protected function call($url)
