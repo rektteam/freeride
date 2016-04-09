@@ -15,6 +15,8 @@ var LocationView = Backbone.View.extend({
 	vehicleType: 'BICYCLING',
 	// Get closest veloh anchor selector
 	getClosestVelohSel: '.get-closest',
+	// Loading class
+	loadingCls: 'loading',
 
 	events: {
 		//'click .get-closest' : 'onGetClosestVelohClick'
@@ -25,6 +27,33 @@ var LocationView = Backbone.View.extend({
 
 		this.model.on('init-google-maps', $.proxy(this.initGoogleMaps, this), this);
 		this.model.on('show-waypoints', $.proxy(this.showWayPoints, this), this);
+		this.model.on('show-progress', $.proxy(this.showProgress, this), this);
+	},
+
+	/**
+	 * Shows a loader animation in the header by adding
+	 * a class to the Dom element
+	 *
+	 * @method showProgress
+	 *
+	 * @return void;
+	 */
+	showProgress: function() {
+		console.info('Showing progress');
+		console.info(this.$el);
+		this.$el.addClass(this.loadingCls);
+	},
+
+	/**
+	 * Hides loading animation in the header by removing
+	 * a class from a DOM element
+	 *
+	 * @method showProgress
+	 *
+	 * @return void;
+	 */
+	hideProgress: function() {
+		this.$el.removeClass(this.loadingCls);
 	},
 
 	/**
@@ -194,6 +223,7 @@ var LocationView = Backbone.View.extend({
 	showWayPoints: function() {
 		this.calcRoute();
 		this.cleanMap();
+		this.hideProgress();
 	}
 
 });
