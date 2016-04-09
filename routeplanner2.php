@@ -85,11 +85,7 @@ try
 {
 	$g = new Dijkstra2($graph);
 
-	var_dump($graph[$closestStationToDeparture['number']]);
-	var_dump($graph[$closestStationToDestination['number']]);
-
-	$g->shortestPath($graph[$closestStationToDeparture['number']], $graph[$closestStationToDestination['number']]);
-	exit;
+	$g->shortestPath($closestStationToDeparture['number'], $closestStationToDestination['number']);
 
 	/** @var $results Vertex[] */
 	foreach ($results as $result)
