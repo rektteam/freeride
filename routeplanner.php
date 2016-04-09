@@ -16,9 +16,9 @@ use ShortestPath\Graph\Algorithm\Dijkstra;
 
 if (
 	empty($_REQUEST['currentPositionLat'])
-	|| empty($_REQUEST['currentPositionLon'])
+	|| empty($_REQUEST['currentPositionLng'])
 	|| empty($_REQUEST['destinationPositionLat'])
-	|| empty($_REQUEST['destinationPositionLon'])
+	|| empty($_REQUEST['destinationPositionLng'])
 ) {
 	exit(json_encode(['status' => 'ERROR', 'error_code' => 'MISSING_PARAMETER']));
 }
@@ -28,7 +28,7 @@ $stationFinder = new StationFinder();
 $closestStationToDeparture = $stationFinder->closest(
 	$stationFinder->whereThereAreAvailableBikes(),
 	$_REQUEST['currentPositionLat'],
-	$_REQUEST['currentPositionLon']
+	$_REQUEST['currentPositionLng']
 );
 
 $stationsWhereThereAreAvailableBikeStands = $stationFinder->whereThereAreAvailableBikeStands();
@@ -36,7 +36,7 @@ $stationsWhereThereAreAvailableBikeStands = $stationFinder->whereThereAreAvailab
 $closestStationToDestination = $stationFinder->closest(
 	$stationsWhereThereAreAvailableBikeStands,
 	$_REQUEST['destinationPositionLat'],
-	$_REQUEST['destinationPositionLon']
+	$_REQUEST['destinationPositionLng']
 );
 
 $stations = $stationsWhereThereAreAvailableBikeStands;
@@ -55,19 +55,7 @@ foreach ($stations as $stationId => $station)
 	$vertexes[$stationId] = new Vertex($stationId);
 }
 
-$keys = array_flip(array_keys($vertexes));
-
-foreach ($keys as $key => $value)
-{
-	$keys[$key] = 0;
-}
-
-//var_dump($closestStationToDeparture);
-//var_dump($closestStationToDestination);
-
 $edges = json_decode(file_get_contents('edges.json'), true);
-
-
 
 foreach ($edges as $stationPair => $distanceInTime)
 {
@@ -83,9 +71,6 @@ foreach ($edges as $stationPair => $distanceInTime)
 	$stationB = $vertexes[$stationBId];
 
 	$stationA->connect($stationB, (int)ceil($distanceInTime));
-
-	$keys[$stationAId] += 1;
-	$keys[$stationBId] += 1;
 }
 
 $graph = new Graph();
@@ -96,8 +81,34 @@ foreach ($vertexes as $vertex)
 }
 
 $dijkstra = new Dijkstra($graph);
-$dijkstra->setStartingVertex($vertexes[$closestStationToDeparture['number']]);
-$dijkstra->setEndingVertex($vertexes[$closestStationToDestination['number']]);
+$dijkstra->setStartingVertex($vertexes[50]);
+//$dijkstra->setStartingVertex($vertexes[$closestStationToDeparture['number']]);
+//$dijkstra->setEndingVertex($vertexes[$closestStationToDestination['number']]);
+$dijkstra->setEndingVertex($vertexes[40]);
 
-echo $dijkstra->getLiteralShortestPath() . PHP_EOL;
-echo 'Distance: ' . $dijkstra->getDistance();
+$response = [
+	'status' => 'OK',
+	'stations' => [],
+];
+
+try
+{
+	$dijkstra->solve();
+	$results = $dijkstra->getShortestPath();
+
+	/** @var $results Vertex[] */
+	foreach ($results as $result)
+	{
+		$stationId = $result->getId();
+
+		$response['stations'][] = [
+			'lat' => $stations[$stationId]['position']['lat'],
+			'lng' => $stations[$stationId]['position']['lng'],
+		];
+	}
+}
+catch (Exception $exception)
+{
+}
+
+echo json_encode($response);

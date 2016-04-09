@@ -89,6 +89,11 @@ class Dijkstra implements AlgorithmInterface
         while ($vertex->getId() != $this->getStartingVertex()->getId()) {
             $path[] = $vertex;
             $vertex = $vertex->getPotentialFrom();
+
+            if (!is_object($vertex))
+            {
+                throw new \Exception('Not found route!');
+            }
         }
 
         $path[] = $this->getStartingVertex();
