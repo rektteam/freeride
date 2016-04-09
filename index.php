@@ -34,7 +34,7 @@ foreach ($edges as $stationPair => $distanceInTime)
 	$stationA = $vertexes[$stationAId];
 	$stationB = $vertexes[$stationBId];
 
-	$stationA->connect($stationB, $distanceInTime);
+	$stationA->connect($stationB, intval($distanceInTime));
 }
 
 foreach ($vertexes as $vertex)
@@ -45,9 +45,9 @@ foreach ($vertexes as $vertex)
 $dijkstra = new Dijkstra($graph);
 $dijkstra->setStartingVertex($vertexes['62']);
 $dijkstra->setEndingVertex($vertexes['55']);
-$dijkstra->solve();
-//echo $dijkstra->getLiteralShortestPath() . PHP_EOL;
-//echo 'Distance: ' . $dijkstra->getDistance();
+
+echo $dijkstra->getLiteralShortestPath() . PHP_EOL;
+echo 'Distance: ' . $dijkstra->getDistance();
 exit;
 ?>
 
