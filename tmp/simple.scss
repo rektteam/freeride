@@ -37,7 +37,9 @@
 	}
 	#google-maps {
 		width: 100%;
-		height: 500px;
+		height: 100%;
+		position: absolute !important;
+		top: 0;
 		.fa-spin {
 			font-size: 15em;
 			margin-top: 110px;
