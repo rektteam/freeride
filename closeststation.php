@@ -5,9 +5,8 @@ header('Content-Type: application/json; charset=utf-8');
 ini_set('display_errors', true);
 error_reporting(E_ALL);
 
-require 'SplClassLoader.php';
-
-$classLoader = new SplClassLoader();
+require __DIR__ . '/source/php/ClassAutoloader.php';
+$classLoader = new ClassAutoloader();
 $classLoader->register();
 
 if (
