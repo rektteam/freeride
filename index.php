@@ -42,7 +42,7 @@ $dijkstra->setEndingVertex($station4);
 	<head>
 		<meta charset="utf-8">
 		<title>The HTML5 Herald</title>
-		<meta name="description" content="The HTML5 Herald">
+		<meta name="description" content="Freeride App">
 		<meta name="author" content="SitePoint">
 		<link href='https://fonts.googleapis.com/css?family=Roboto:400,700,900,300' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" type="text/css" href='./public/simple.min.css'/>

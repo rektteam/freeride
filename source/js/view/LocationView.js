@@ -9,6 +9,8 @@ var LocationView = Backbone.View.extend({
 	googleMapsId: '#google-maps',
 	// This array will contain the markers
 	markers: [],
+	// Waypoints between start and end direction
+	waypoints: [],
 
 	events: {
 		'click .get-location' : 'onGetLocationClick'
@@ -60,17 +62,36 @@ var LocationView = Backbone.View.extend({
 		bounds.extend(start);
 		bounds.extend(end);
 		map.fitBounds(bounds);
+		console.info(start.lat() + ' ' + start.lng());
+		console.info(end.lat() + ' ' + end.lng());
 		var request = {
 			origin: start,
 			destination: end,
-			travelMode: google.maps.TravelMode.DRIVING
+			travelMode: google.maps.TravelMode.BICYCLING,
+			waypoints: this.waypoints
 		};
+		this.planRoute(request);
+	},
+
+	/**
+	 *
+	 */
+	planRoute: function(request) {
+		var self = this;
 		this.directionsService.route(request, function (response, status) {
-			if (status == google.maps.DirectionsStatus.OK) {
-				self.directionsDisplay.setDirections(response);
-				self.directionsDisplay.setMap(map);
-			} else {
-				alert("Directions Request from " + start.toUrlValue(6) + " to " + end.toUrlValue(6) + " failed: " + status);
+			switch(status)  {
+				case google.maps.DirectionsStatus.OK:
+					console.info('Route ok');
+					self.directionsDisplay.setDirections(response);
+					self.directionsDisplay.setMap(self.map);
+					break;
+				case google.maps.DirectionsStatus.ZERO_RESULTS:
+					console.info('Zero result, skipping waypoints and redraw without it');
+					request.waypoints = [];
+					$.proxy(self.planRoute(request), self);
+					break;
+				default:
+					alert("Directions Request from " + start.toUrlValue(6) + " to " + end.toUrlValue(6) + " failed: " + status);
 			}
 		});
 	},
@@ -91,17 +112,31 @@ var LocationView = Backbone.View.extend({
 	},
 
 	addMarker: function (locationInfo) {
-		console.info(locationInfo);
+		console.info('Adding marker');
 		var marker = new google.maps.Marker({
 			position: locationInfo,
 			map: this.map
 		});
-		this.markers.push({
-			lat: locationInfo.lat(),
-			lng: locationInfo.lng()
-		});
-		console.info(this.markers);
+
+		if (this.markers.length > 1 ) {
+			console.info('Adding Waypoint');
+			this.addWayPoint(locationInfo);
+		}
+		else {
+			console.info('Adding end position');
+			this.markers.push({
+				lat: locationInfo.lat(),
+				lng: locationInfo.lng()
+			});
+		}
+
 		this.calcRoute();
+	},
+
+	addWayPoint: function(locationInfo) {
+		this.waypoints.push({
+			location: new google.maps.LatLng(locationInfo.lat(), locationInfo.lng())
+		})
 	}
 
 });
