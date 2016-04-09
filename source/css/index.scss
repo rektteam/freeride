@@ -8,6 +8,13 @@
 			}
 		}
 	}
+	.post-loading {
+		position: absolute;
+		width: 100%;
+		top: 10%;
+		left: 0;
+		text-align: center;
+	}
 	.loader {
 		width: 100%;
 		text-align: center;
@@ -64,8 +71,8 @@
 		top: 0;
 		left: 0;
 		.fa-spin {
-			font-size: 15em;
-			margin-top: 110px;
+			font-size: 10em;
+			margin-top: 130px;
 		}
 	}
 }
