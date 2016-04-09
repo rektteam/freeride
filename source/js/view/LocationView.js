@@ -17,7 +17,7 @@ var LocationView = Backbone.View.extend({
 	getClosestVelohSel: '.get-closest',
 
 	events: {
-		'click .get-closest' : 'onGetClosestVelohClick'
+		//'click .get-closest' : 'onGetClosestVelohClick'
 	},
 
 	initialize: function () {
@@ -181,6 +181,7 @@ var LocationView = Backbone.View.extend({
 			console.info('removing marker');
 			this.markers[i].setMap(null);
 		}
+		this.me.setMap(null);
 	},
 
 	/**
@@ -192,6 +193,7 @@ var LocationView = Backbone.View.extend({
 	 */
 	showWayPoints: function() {
 		this.calcRoute();
+		this.cleanMap();
 	}
 
 });
