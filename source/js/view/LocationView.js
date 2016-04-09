@@ -181,6 +181,7 @@ var LocationView = Backbone.View.extend({
 			console.info('removing marker');
 			this.markers[i].setMap(null);
 		}
+		this.me.setMap(null);
 	},
 
 	/**
