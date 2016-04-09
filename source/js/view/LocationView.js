@@ -17,7 +17,7 @@ var LocationView = Backbone.View.extend({
 	initialize: function () {
 		this.googleMapsEl = $(this.googleMapsId);
 
-		this.model.on('init-google-maps', $.proxy(this.locationChanged, this), this);
+		this.model.on('init-google-maps', $.proxy(this.initGoogleMaps, this), this);
 		this.model.on('show-waypoints', $.proxy(this.showWayPoints, this), this);
 	},
 
@@ -30,14 +30,14 @@ var LocationView = Backbone.View.extend({
 	 * @return {void};
 	 */
 	initGoogleMaps: function() {
-		this.directionsDisplay = new google.maps.DirectionsRenderer;
+		this.directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers: true});
 		this.directionsService = new google.maps.DirectionsService;
 
 		this.map = new google.maps.Map(this.googleMapsEl.get(0), {
 			center: this.model.getStartingPoint(),
 			scrollwheel: false,
 			draggable: true,
-			zoom: 17
+			zoom: 15
 		});
 
 		this.directionsDisplay.setMap(this.map);
@@ -108,10 +108,6 @@ var LocationView = Backbone.View.extend({
 		});
 	},
 
-	locationChanged: function () {
-		this.initGoogleMaps();
-	},
-
 	/**
 	 * Starts to listen to google maps events
 	 *
@@ -139,11 +135,12 @@ var LocationView = Backbone.View.extend({
 
 		var marker = new google.maps.Marker({
 			position: locationInfo,
-			map: this.map
+			map: this.map,
+			draggable: true,
+			animation: google.maps.Animation.DROP
 		});
 
 		this.markers.push(marker);
-
 
 		this.model.set('endPoint', {
 			lat: locationInfo.lat(),
@@ -161,7 +158,8 @@ var LocationView = Backbone.View.extend({
 	 */
 	cleanMap: function() {
 		for (var i = 0; i < this.markers.length; i++) {
-			this.markers[i].setMap(this.map);
+			console.info('removing marker');
+			this.markers[i].setMap(null);
 		}
 	},
 
